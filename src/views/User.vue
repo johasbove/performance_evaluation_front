@@ -2,9 +2,12 @@
   <v-layout row>
     <v-flex xs12 sm6 offset-sm3>
       <v-card>
+        <v-toolbar color="blue darken-2" dark>
+          <v-toolbar-title>Usuarios</v-toolbar-title>
+          <v-spacer></v-spacer>
+        </v-toolbar>
         <v-list two-line>
-          <template v-for="(header, index) in headers.slice(0, 6)">
-            <v-subheader :key="header.value">{{ header.name }}</v-subheader>
+          <template v-for="header in headers">
             <v-list-tile :key="header.title" avatar>
               <v-list-tile-avatar>
                 <v-icon small color="blue darken-2">
@@ -12,9 +15,9 @@
                 </v-icon>
               </v-list-tile-avatar>
               <v-list-tile-content>
-                <v-list-tile-sub-title :v-html="getUserPropValue(header.value)" v-if="user"></v-list-tile-sub-title>
+                <v-list-tile-title v-html="header.text"></v-list-tile-title>
+                <v-list-tile-sub-title v-html="getUserPropValue(header.value)" v-if="user"></v-list-tile-sub-title>
               </v-list-tile-content>
-              <v-divider :key="index"></v-divider>
             </v-list-tile>
           </template>
         </v-list>
@@ -67,7 +70,7 @@ export default {
       })
     },
     getUserPropValue: function(propName) {
-      return this.user[propName]
+      return this._.get(this.user, propName)
     }
   }
 }
